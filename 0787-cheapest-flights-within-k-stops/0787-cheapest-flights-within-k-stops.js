@@ -12,20 +12,19 @@ var findCheapestPrice = function(n, flights, src, dst, k) {
         if(map.has(start)) map.get(start).push([end,cost]);
         else map.set(start,[[end,cost]]);
     }
-    const queue = [[0, src, k+1]];
-    const visited = new Map();
+    const queue = [[0,src,k+1]];
+    const visit = new Map();
     
     while(queue.length){
-        queue.sort((a,b)=> a[0]-b[0]);
-        
+        queue.sort((a,b)=>a[0]-b[0]);
         const [cost, city, stops] = queue.shift();
-        visited.set(city, stops);
+        visit.set(city,stops);
         if(city === dst) return cost;
         if(stops <= 0 || !map.has(city)) continue;
         
-        for(let [nextCity, nextCost] of map.get(city)){
-            if(visited.has(nextCity) && visited.get(nextCity) >= stops) continue;
-            queue.push([cost + nextCost,nextCity,stops-1]);
+        for(let [nextCity,nextCost] of map.get(city)){
+            if(visit.has(nextCity) && visit.get(nextCity) >= stops-1) continue;
+            queue.push([cost+nextCost,nextCity,stops-1]);
         }
     }
     return -1;

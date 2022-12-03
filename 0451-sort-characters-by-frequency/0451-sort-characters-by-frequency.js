@@ -12,7 +12,6 @@ var frequencySort = function(s) {
     }
     let mapArr = [...map];
     mapArr.sort((a,b)=> b[1] - a[1]);
-    console.log(mapArr);
     for(let [str,num] of mapArr){
         while(num > 0){
             result += str;
